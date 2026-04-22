@@ -11,4 +11,10 @@ update-workload version:
 
 build-wasm-components:
 	-cd component && wash build
+	cd data && cargo build --release --target=wasm32-wasip2
 	-cd http-api && wash build
+
+format:
+	cd component && cargo fmt
+	cd data && cargo fmt
+	cd http-api && cargo fmt

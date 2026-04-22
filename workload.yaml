@@ -11,9 +11,11 @@ spec:
       # Images come from internal OCI registry.
       components:
         - name: http-api
-          image: wasmcloud-registry/http-api:v2
+          image: wasmcloud-registry:5000/http-api:v2
         - name: otel
-          image: wasmcloud-registry/component:v2
+          image: wasmcloud-registry:5000/component:v2
+      service:
+        image: wasmcloud-registry:5000/service:
       hostInterfaces:
         - namespace: wasi
           package: http
