@@ -8,11 +8,12 @@ spec:
     spec:
       hostSelector:
         hostgroup: default
+      # Images come from internal OCI registry.
       components:
         - name: http-api
-          image: ghcr.io/gopi200/wasm-caching-poc/http-api:0.1.0
-      service:
-        image: ghcr.io/gopi200/wasm-caching-poc/service:0.1.0
+          image: wasmcloud-registry/http-api:v2
+        - name: otel
+          image: wasmcloud-registry/component:v2
       hostInterfaces:
         - namespace: wasi
           package: http
