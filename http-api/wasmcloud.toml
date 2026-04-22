@@ -1,0 +1,5 @@
+language = "rust"
+type = "component"
+
+[overrides]
+"dewinz:otel" = { path = "../component/wit/world.wit" }
