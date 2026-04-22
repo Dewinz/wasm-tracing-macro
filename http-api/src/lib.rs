@@ -1,4 +1,4 @@
-use wstd::http::{Body, Request, Response, StatusCode};
+use wstd::http::{Body, Request, Response};
 
 mod bindings {
     wit_bindgen::generate!({ generate_all });
@@ -10,7 +10,7 @@ type HttpResult = Result<Response<Body>, wstd::http::Error>;
 
 #[wstd::http_server]
 async fn main(req: Request<Body>) -> HttpResult {
-    match req.uri().path_and_query().unwrap().as_str() {
+    match req.uri().path() {
         "/" => home(req).await,
         _ => not_found(req).await,
     }
@@ -57,12 +57,9 @@ async fn home(_req: Request<Body>) -> HttpResult {
         dropped_links: 0,
     });
 
-    Ok(Response::new(format!("Hi").into()))
+    Ok(Response::new(String::from("Hi").into()))
 }
 
 async fn not_found(_req: Request<Body>) -> HttpResult {
-    Ok(Response::builder()
-        .status(StatusCode::NOT_FOUND)
-        .body("Not found\n".into())
-        .unwrap())
+    Ok(Response::new(String::from("Not found").into()))
 }

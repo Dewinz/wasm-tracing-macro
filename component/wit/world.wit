@@ -1,5 +1,20 @@
 package dewinz:otel@0.1.0;
 
+interface tracing {
+	use wasi:otel/tracing@0.2.0-rc.2.{span-context, span-data};
+
+	/// Defined by the component.
+	on-start: func(context: span-context);
+
+	/// Forwarded to the wasmCloud runtime.
+	on-end: func(span: span-data);
+
+	/// Forwarded to the wasmCloud runtime.
+	outer-span-context: func() -> span-context;
+}
+
 world main {
-	export wasi:otel/tracing@0.2.0-rc.2;
+	import wasi:otel/tracing@0.2.0-rc.2;
+
+	export tracing;
 }
