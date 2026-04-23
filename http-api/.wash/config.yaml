@@ -5,3 +5,4 @@ build:
 wit:
   sources:
     "dewinz:component": "../component/wit/world.wit"
+    "betty-blocks:random-hex": "../../block-store-wasm-components/functions/random-hex/1.0/wit/world.wit"

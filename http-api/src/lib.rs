@@ -1,4 +1,5 @@
 use wstd::http::{Body, Request, Response};
+use otel_tracing_wasm_macro::trace;
 
 mod bindings {
     wit_bindgen::generate!({ generate_all });
@@ -16,6 +17,7 @@ async fn main(req: Request<Body>) -> HttpResult {
     }
 }
 
+#[trace]
 async fn home(_req: Request<Body>) -> HttpResult {
     component::first();
 

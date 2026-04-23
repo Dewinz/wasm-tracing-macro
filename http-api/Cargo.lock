@@ -191,6 +191,7 @@ dependencies = [
 name = "http-api"
 version = "0.1.0"
 dependencies = [
+ "otel-tracing-wasm-macro",
  "wit-bindgen 0.42.1",
  "wstd",
 ]
@@ -274,6 +275,14 @@ name = "once_cell"
 version = "1.21.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50"
+
+[[package]]
+name = "otel-tracing-wasm-macro"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "parking"

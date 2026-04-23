@@ -2,4 +2,6 @@ package dewinz:http-api@0.1.0;
 
 world main {
 	import dewinz:component/component@0.1.0;
+	import betty-blocks:random-hex/random-hex;
+	import wasi:otel/tracing@0.2.0-rc.1;
 }

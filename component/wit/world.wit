@@ -9,7 +9,7 @@ interface component {
 }
 
 world main {
-	import wasi:otel/tracing@0.2.0-rc.2;
+	import wasi:otel/tracing@0.2.0-rc.1;
 
 	export component;
 }
