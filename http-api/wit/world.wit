@@ -1,5 +1,5 @@
 package dewinz:http-api@0.1.0;
 
 world main {
-	import wasi:otel/tracing@0.2.0-rc.2;
+	import dewinz:otel/tracing@0.1.0;
 }

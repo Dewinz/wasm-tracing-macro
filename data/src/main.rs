@@ -1,26 +1,32 @@
-use shared::Action;
-use std::{cell::Cell, rc::Rc};
+use shared::{Action, ActionResponse, SpanInfo};
 
 #[wstd::main]
 async fn main() -> wstd::io::Result<()> {
-    let span_tree: Rc<Cell<String>> = Rc::new(Cell::default());
+    let active_span: std::rc::Rc<std::cell::RefCell<Option<SpanInfo>>> =
+        std::rc::Rc::new(std::cell::RefCell::new(None));
+
     wash_service_helpers::run_tcp_server(1, async move |action: Action| {
-        process_message(&span_tree, action).await
+        process_message(&active_span, action)
     })
     .await
 }
 
-async fn process_message(span_tree: &Cell<String>, action: Action) -> String {
+fn process_message(
+    active_span: &std::cell::RefCell<Option<SpanInfo>>,
+    action: Action,
+) -> ActionResponse {
     match action {
-        Action::Add => add_span(span_tree),
-        Action::Remove => end_span(span_tree),
+        Action::Start(span_info) => {
+            *active_span.borrow_mut() = Some(span_info);
+            ActionResponse::Started
+        }
+        Action::End => {
+            let span = active_span.borrow_mut().take();
+            ActionResponse::Ended(span)
+        }
+        Action::GetContext => {
+            let span = active_span.borrow().clone();
+            ActionResponse::Context(span)
+        }
     }
-}
-
-fn add_span(_span_tree: &Cell<String>) -> String {
-    String::default()
-}
-
-fn end_span(_span_tree: &Cell<String>) -> String {
-    String::default()
 }

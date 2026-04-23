@@ -6,9 +6,9 @@ update registry_url version: (build-and-push registry_url version) (update-workl
 
 # Don't use `https://`, just the URL without protocol.
 build-and-push registry_url version: build-wasm-components
-	wash push --insecure {{registry_url}}/component:{{version}} component/build/otel_wasm_component.wasm
-	wash push --insecure {{registry_url}}/data:{{version}} data/target/wasm32-wasip2/release/data.wasm
-	wash push --insecure {{registry_url}}/http-api:{{version}} http-api/build/http_api.wasm
+	wash oci push --insecure {{registry_url}}/component:{{version}} component/target/wasm32-wasip2/release/otel_wasm_component.wasm
+	wash oci push --insecure {{registry_url}}/data:{{version}} data/target/wasm32-wasip2/release/data.wasm
+	wash oci push --insecure {{registry_url}}/http-api:{{version}} http-api/target/wasm32-wasip2/release/http_api.wasm
 
 update-workload version:
 	sed -i 's|image: \(.*http-api:\).*|image: \1{{version}}|' workload.yaml
