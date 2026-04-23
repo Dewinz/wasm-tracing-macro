@@ -4,4 +4,4 @@ build:
 
 wit:
   sources:
-    "dewinz:otel": "../component/wit/world.wit"
+    "dewinz:component": "../component/wit/world.wit"

@@ -1,20 +1,15 @@
-package dewinz:otel@0.1.0;
+package dewinz:component@0.1.0;
 
-interface tracing {
-	use wasi:otel/tracing@0.2.0-rc.2.{span-context, span-data};
+interface component {
+	first: func();
 
-	/// Starts a new span. The component generates IDs and stores state in the data service.
-	on-start: func();
+	second: func(something: string);
 
-	/// Ends the current span. Retrieves span from data service and forwards to the host.
-	on-end: func();
-
-	/// Returns the current active span context from the data service.
-	get-span-context: func() -> span-context;
+	third: func() -> result<string, string>;
 }
 
 world main {
 	import wasi:otel/tracing@0.2.0-rc.2;
 
-	export tracing;
+	export component;
 }

@@ -4,7 +4,7 @@ mod bindings {
     wit_bindgen::generate!({ generate_all });
 }
 
-use bindings::dewinz::otel::tracing;
+use bindings::dewinz::component::component;
 
 type HttpResult = Result<Response<Body>, wstd::http::Error>;
 
@@ -17,13 +17,18 @@ async fn main(req: Request<Body>) -> HttpResult {
 }
 
 async fn home(_req: Request<Body>) -> HttpResult {
-    tracing::on_start();
+    component::first();
 
-    // ... do work ...
+    component::second(&String::default());
 
-    tracing::on_end();
+    another_function();
 
     Ok(Response::new(String::from("Hi").into()))
+}
+
+fn another_function() {
+    let something = component::third();
+    println!("{:?}", something);
 }
 
 async fn not_found(_req: Request<Body>) -> HttpResult {
