@@ -14,8 +14,8 @@ update-workload version:
 	sed -i 's|image: \(.*component:\).*|image: \1{{version}}|' workload.yaml
 
 build-wasm-components:
-	cd component && wash build
-	cd http-api && wash build
+	cd component && cargo build --target=wasm32-wasip2 --release
+	cd http-api && cargo build --target=wasm32-wasip2 --release
 
 format:
 	cd component && cargo fmt
