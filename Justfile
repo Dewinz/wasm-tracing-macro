@@ -6,16 +6,16 @@ update registry_url version: (build-and-push registry_url version) (update-workl
 
 # Don't use `https://`, just the URL without protocol.
 build-and-push registry_url version: build-wasm-components
-	wash oci push --insecure {{registry_url}}/component:{{version}} component/target/wasm32-wasip2/release/component.wasm
-	wash oci push --insecure {{registry_url}}/http-api:{{version}} http-api/target/wasm32-wasip2/release/http_api.wasm
+	wash oci push {{registry_url}}/component:{{version}} component/target/wasm32-wasip2/release/component.wasm
+	wash oci push {{registry_url}}/http-api:{{version}} http-api/target/wasm32-wasip2/release/http_api.wasm
 
 update-workload version:
 	sed -i 's|image: \(.*http-api:\).*|image: \1{{version}}|' workload.yaml
 	sed -i 's|image: \(.*component:\).*|image: \1{{version}}|' workload.yaml
 
 build-wasm-components:
-	cd component && cargo build --target=wasm32-wasip2 --release
-	cd http-api && cargo build --target=wasm32-wasip2 --release
+	cd component && wkg wit fetch && cargo build --target=wasm32-wasip2 --release
+	cd http-api && wkg wit fetch && cargo build --target=wasm32-wasip2 --release
 
 format:
 	cd component && cargo fmt

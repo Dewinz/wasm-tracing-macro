@@ -6,16 +6,18 @@ mod bindings {
 }
 
 use bindings::exports::dewinz::component::component::Guest;
+use otel_tracing_wasm_macro::trace;
 
 struct Component;
 
 impl Guest for Component {
-    fn first() {
-    }
+    #[trace]
+    fn first() {}
 
-    fn second(_something: String) {
-    }
+    #[trace]
+    fn second(_something: String) {}
 
+    #[trace]
     fn third() -> Result<String, String> {
         Ok(String::default())
     }

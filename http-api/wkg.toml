@@ -1,0 +1,2 @@
+[overrides]
+"dewinz:component" = { path = "../component/wit/world.wit" }

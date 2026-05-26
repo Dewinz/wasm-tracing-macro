@@ -5,11 +5,11 @@ mod bindings {
     export!(Component);
 }
 
+use bindings::dewinz::component::component;
 use bindings::exports::wasi::http::incoming_handler::Guest;
 use bindings::wasi::http::types::{
     Fields, IncomingRequest, OutgoingBody, OutgoingResponse, ResponseOutparam,
 };
-use bindings::dewinz::component::component;
 use otel_tracing_wasm_macro::trace;
 
 struct Component;
@@ -27,7 +27,9 @@ impl Guest for Component {
         let body = response.body().unwrap();
         ResponseOutparam::set(response_out, Ok(response));
         let stream = body.write().unwrap();
-        stream.blocking_write_and_flush(body_text.as_bytes()).unwrap();
+        stream
+            .blocking_write_and_flush(body_text.as_bytes())
+            .unwrap();
         drop(stream);
         OutgoingBody::finish(body, None).unwrap();
     }
@@ -41,6 +43,7 @@ fn handle_home() -> (u16, String) {
     (200, String::from("Hi"))
 }
 
+#[trace]
 fn another_function() {
     let _ = component::third();
 }

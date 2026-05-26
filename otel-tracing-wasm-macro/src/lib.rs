@@ -13,12 +13,19 @@ pub fn trace(_attr: TokenStream, input: TokenStream) -> TokenStream {
     let expanded = quote! {
         #input_function_signature {
             use crate::bindings::wasi;
-            use crate::bindings::betty_blocks;
+
+            let __generate_random_16_hex = || {
+                use rand::{Rng, RngExt};
+                let mut rng_generator = rand::rng();
+                let hex_generator_closure = || format!("{:X}", rng_generator.random_range(0..16));
+                let hex_iterator = std::iter::repeat_with(hex_generator_closure).take(16);
+                hex_iterator.collect()
+            };
 
             let __host_ctx = wasi::otel::tracing::outer_span_context();
-            let __span_id = betty_blocks::random_hex::random_hex::generate_random_hex(16);
+            let __span_id = __generate_random_16_hex();
             let __trace_id = if __host_ctx.trace_id.is_empty() {
-                betty_blocks::random_hex::random_hex::generate_random_hex(16)
+                __generate_random_16_hex()
             } else {
                 __host_ctx.trace_id.clone()
             };
