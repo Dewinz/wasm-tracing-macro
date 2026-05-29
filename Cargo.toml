@@ -1,8 +1,8 @@
 [package]
 name = "wasm-tracing-macro"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
-description = "OTel tracing macro for functions for use in wamsCloud"
+description = "OTel tracing macro for functions for use in wasmCloud"
 license = "MIT"
 
 [lib]

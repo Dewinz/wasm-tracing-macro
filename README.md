@@ -15,8 +15,8 @@ spec:
       hostSelector:
         hostgroup: default
       components:
-        - name: http-api
-          image: some-registry:5000/something:v1
+        - name: something
+          image: some-registry/something:v1
       # This is the important part.
       hostInterfaces:
         - namespace: wasi
