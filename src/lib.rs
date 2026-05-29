@@ -7,7 +7,7 @@ pub fn trace(attribute: TokenStream, input: TokenStream) -> TokenStream {
     let wasi_path: syn::Path = if attribute.is_empty() {
         syn::parse_str("crate::wasi").unwrap()
     } else {
-        parse_macro_input!(attribute as syn::Path)
+        syn::parse_str(&format!("{attribute}::wasi")).unwrap()
     };
 
     let input_function = parse_macro_input!(input as ItemFn);
