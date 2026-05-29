@@ -3,7 +3,13 @@ use syn::{parse_macro_input, ItemFn};
 use quote::quote;
 
 #[proc_macro_attribute]
-pub fn trace(_attr: TokenStream, input: TokenStream) -> TokenStream {
+pub fn trace(attribute: TokenStream, input: TokenStream) -> TokenStream {
+    let wasi_path: syn::Path = if attribute.is_empty() {
+        syn::parse_str("crate::wasi").unwrap()
+    } else {
+        parse_macro_input!(attribute as syn::Path)
+    };
+
     let input_function = parse_macro_input!(input as ItemFn);
     let input_function_signature = &input_function.sig;
     let input_function_block = &input_function.block;
@@ -12,7 +18,7 @@ pub fn trace(_attr: TokenStream, input: TokenStream) -> TokenStream {
 
     let expanded = quote! {
         #input_function_signature {
-            use crate::bindings::wasi;
+            use #wasi_path;
 
             let __generate_random_16_hex = || {
                 use rand::{Rng, RngExt};
